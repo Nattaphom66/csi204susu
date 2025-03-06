@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ตรวจสอบอายุและตัวเลข</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin: 50px;
+        }
+        form {
+            display: inline-block;
+            text-align: left;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        label, input {
+            display: block;
+            margin: 10px 0;
+            font-size: 16px;
+        }
+        button {
+            padding: 10px;
+            font-size: 16px;
+            background-color: #28a745;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #218838;
+        }
+        p {
+            font-size: 18px;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+    <h1>ตรวจสอบอายุและตัวเลข</h1>
+    
+    <form id="ageForm">
+        <label for="age">กรอกอายุของคุณ:</label>
+        <input type="number" id="age" name="age">
+        <button type="submit">ตรวจสอบ</button>
+    </form>
+    <p id="ageResult"></p>
+    
+    <form id="numberForm">
+        <label for="number">กรอกตัวเลข:</label>
+        <input type="number" id="number" name="number">
+        <button type="submit">ตรวจสอบ</button>
+    </form>
+    <p id="numberResult"></p>
+    
+    <script>
+        document.getElementById("ageForm").addEventListener("submit", function(event) {
+            event.preventDefault();
+            let age = parseInt(document.getElementById("age").value);
+            let result = "";
+            
+            if (isNaN(age) || age < 0) {
+                result = "กรุณากรอกอายุที่ถูกต้อง";
+            } else if (age <= 12) {
+                result = "เด็ก";
+            } else if (age <= 19) {
+                result = "วัยรุ่น";
+            } else {
+                result = "ผู้ใหญ่";
+            }
+            document.getElementById("ageResult").innerText = result;
+        });
+        
+        document.getElementById("numberForm").addEventListener("submit", function(event) {
+            event.preventDefault();
+            let number = parseInt(document.getElementById("number").value);
+            let result = "";
+            
+            if (isNaN(number)) {
+                result = "กรุณากรอกตัวเลขที่ถูกต้อง";
+            } else if (number % 2 === 0) {
+                result = "เลขคู่";
+            } else {
+                result = "เลขคี่";
+            }
+            document.getElementById("numberResult").innerText = result;
+        });
+    </script>
+</body>
+</html>

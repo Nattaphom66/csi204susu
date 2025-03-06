@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>เครื่องคิดคะแนน GPA</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      margin: 20px;
+    }
+    form {
+      display: inline-block;
+      text-align: left;
+      padding: 10px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      margin-bottom: 20px;
+      font-size: 14px;
+    }
+    label, input {
+      display: block;
+      margin: 5px 0;
+      font-size: 14px;
+    }
+    button {
+      padding: 8px;
+      font-size: 14px;
+      background-color: #28a745;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    button:hover {
+      background-color: #218838;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 20px;
+      font-size: 14px;
+    }
+    th, td {
+      border: 1px solid #ccc;
+      padding: 8px;
+      text-align: center;
+    }
+    th {
+      background-color: #f2f2f2;
+    }
+  </style>
+</head>
+<body>
+  <h1>เครื่องคิดคะแนน GPA</h1>
+  
+  
+  <h2>เกรดที่แปลงจากคะแนน:</h2>
+  <table id="gradesTable">
+    <thead>
+      <tr>
+        <th>วิชา</th>
+        <th>คะแนน</th>
+        <th>เกรด</th>
+      </tr>
+    </thead>
+    <tbody>
+    </tbody>
+  </table>
+
+  <h2>ผล GPA:</h2>
+  <p id="gpaResult"></p>
+  
+  <form id="gradeForm">
+    <label for="scoreCSI101">คะแนน CSI101 (0-100):</label>
+    <input type="number" id="scoreCSI101" min="0" max="100" oninput="validateScore(this)"><br><br>
+    
+    <label for="scoreCSI102">คะแนน CSI102 (0-100):</label>
+    <input type="number" id="scoreCSI102" min="0" max="100" oninput="validateScore(this)"><br><br>
+    
+    <label for="scoreCSI203">คะแนน CSI203 (0-100):</label>
+    <input type="number" id="scoreCSI203" min="0" max="100" oninput="validateScore(this)"><br><br>
+    
+    <label for="scoreCSI204">คะแนน CSI204 (0-100):</label>
+    <input type="number" id="scoreCSI204" min="0" max="100" oninput="validateScore(this)"><br><br>
+    
+    <label for="scoreCSI305">คะแนน CSI305 (0-100):</label>
+    <input type="number" id="scoreCSI305" min="0" max="100" oninput="validateScore(this)"><br><br>
+    
+    <button type="button" onclick="calculateGPA()">คำนวณ GPA</button>
+  </form>
+
+  <script>
+    // ฟังก์ชันแปลงคะแนนเป็นเกรด A-F
+    function getGrade(score) {
+      if (score >= 90) return "A";
+      if (score >= 80) return "B+";
+      if (score >= 70) return "B";
+      if (score >= 60) return "C+";
+      if (score >= 50) return "C";
+      if (score >= 40) return "D";
+      return "F";
+    }
+
+    // ฟังก์ชันตรวจสอบคะแนน
+    function validateScore(input) {
+      if (input.value > 100) {
+        input.value = 100;
+      } else if (input.value < 0) {
+        input.value = 0;
+      }
+    }
+
+    function calculateGPA() {
+      // รับคะแนนจาก input
+      let scoreCSI101 = parseFloat(document.getElementById('scoreCSI101').value);
+      let scoreCSI102 = parseFloat(document.getElementById('scoreCSI102').value);
+      let scoreCSI203 = parseFloat(document.getElementById('scoreCSI203').value);
+      let scoreCSI204 = parseFloat(document.getElementById('scoreCSI204').value);
+      let scoreCSI305 = parseFloat(document.getElementById('scoreCSI305').value);
+
+      // จำนวนหน่วยกิต
+      let credit = 3;
+
+      // แปลงคะแนนเป็นเกรด A-F
+      let gradeCSI101 = getGrade(scoreCSI101);
+      let gradeCSI102 = getGrade(scoreCSI102);
+      let gradeCSI203 = getGrade(scoreCSI203);
+      let gradeCSI204 = getGrade(scoreCSI204);
+      let gradeCSI305 = getGrade(scoreCSI305);
+
+      // คำนวณคะแนนรวมโดยการใช้เกรด
+      let totalScore = (getGradePoint(gradeCSI101) * credit) + (getGradePoint(gradeCSI102) * credit) + 
+                       (getGradePoint(gradeCSI203) * credit) + (getGradePoint(gradeCSI204) * credit) + 
+                       (getGradePoint(gradeCSI305) * credit);
+      
+      // คำนวณหน่วยกิตรวม
+      let totalCredits = credit * 5; // 5 วิชา
+
+      // คำนวณ GPA
+      let GPA = totalScore / totalCredits;
+
+      // แสดงผลเกรดที่แปลงจากคะแนนในตาราง
+      let gradesTableBody = `
+        <tr>
+          <td>CSI101</td>
+          <td>${scoreCSI101}</td>
+          <td>${gradeCSI101}</td>
+        </tr>
+        <tr>
+          <td>CSI102</td>
+          <td>${scoreCSI102}</td>
+          <td>${gradeCSI102}</td>
+        </tr>
+        <tr>
+          <td>CSI203</td>
+          <td>${scoreCSI203}</td>
+          <td>${gradeCSI203}</td>
+        </tr>
+        <tr>
+          <td>CSI204</td>
+          <td>${scoreCSI204}</td>
+          <td>${gradeCSI204}</td>
+        </tr>
+        <tr>
+          <td>CSI305</td>
+          <td>${scoreCSI305}</td>
+          <td>${gradeCSI305}</td>
+        </tr>
+      `;
+
+      document.querySelector('#gradesTable tbody').innerHTML = gradesTableBody;
+
+      // แสดงผล GPA
+      document.getElementById('gpaResult').innerText = GPA.toFixed(2);
+    }
+
+    // ฟังก์ชันแปลงเกรด A-F เป็นคะแนนเกรด
+    function getGradePoint(grade) {
+      switch (grade) {
+        case "A": return 4;
+        case "B+": return 3.5;
+        case "B": return 3;
+        case "C+": return 2.5;
+        case "C": return 2;
+        case "D": return 1.5;
+        case "F": return 1;
+        default: return 0;
+      }
+    }
+  </script>
+</body>
+</html>

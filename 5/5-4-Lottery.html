@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lottery Generator</title>
+</head>
+<body>
+    <h1>ระบบสุ่มเลขหวย</h1>
+    <p>กรุณาทายเลข 6 หลัก:</p>
+    <input type="text" id="userInput" maxlength="6" placeholder="กรอกเลข 6 หลัก">
+    <button onclick="checkLottery()">ทายเลข</button>
+    <p id="result"></p>
+
+    <script>
+        // ฟังก์ชันสำหรับสุ่มเลข 6 หลัก
+        function generateLottery() {
+            let lotteryNumber = '';
+            for (let i = 0; i < 6; i++) {
+                lotteryNumber += Math.floor(Math.random() * 10); // สุ่มตัวเลข 0-9
+            }
+            return lotteryNumber;
+        }
+
+        // ฟังก์ชันตรวจสอบเลขที่ทาย
+        function checkLottery() {
+            const userInput = document.getElementById('userInput').value;
+            const lotteryNumber = generateLottery(); // เลขที่สุ่ม
+            const resultElement = document.getElementById('result');
+
+            if (userInput.length !== 6 || isNaN(userInput)) {
+                resultElement.innerHTML = "กรุณากรอกเลข 6 หลักที่ถูกต้อง";
+                return;
+            }
+
+            if (userInput === lotteryNumber) {
+                resultElement.innerHTML = `ยินดีด้วย! ทายถูกต้อง! เลขที่ออกคือ ${lotteryNumber}`;
+            } else {
+                resultElement.innerHTML = `ไม่ถูกต้อง! เลขที่ออกคือ ${lotteryNumber}`;
+            }
+        }
+    </script>
+</body>
+</html>

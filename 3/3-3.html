@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ฟอร์มรับข้อมูล</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin: 50px;
+        }
+        form {
+            display: inline-block;
+            text-align: left;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        label, input {
+            display: block;
+            margin: 10px 0;
+            font-size: 16px;
+        }
+        button {
+            padding: 10px;
+            font-size: 16px;
+            background-color: #28a745;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #218838;
+        }
+    </style>
+</head>
+<body>
+    <h1>ฟอร์มรับข้อมูล</h1>
+    <form id="myForm">
+        <label for="name">ชื่อ:</label>
+        <input type="text" id="name" name="name">
+        
+        <label for="email">อีเมล:</label>
+        <input type="text" id="email" name="email">
+        
+        <button type="submit">ส่งข้อมูล</button>
+    </form>
+    
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            document.getElementById("myForm").addEventListener("submit", function(event) {
+                event.preventDefault();
+                
+                let name = document.getElementById("name").value.trim();
+                let email = document.getElementById("email").value.trim();
+                let errorMessage = "";
+                
+                if (name === "") {
+                    errorMessage += "กรุณากรอกชื่อ\n";
+                }
+                
+                if (!email.includes("@") || !email.endsWith(".com")) {
+                    errorMessage += "อีเมลต้องมี '@' และลงท้ายด้วย '.com'\n";
+                }
+                
+                if (errorMessage) {
+                    alert(errorMessage);
+                } else {
+                    alert("ส่งข้อมูลสำเร็จ!\nชื่อ: " + name + "\nอีเมล: " + email);
+                    document.getElementById("myForm").reset();
+                }
+            });
+        });
+    </script>
+</body>
+</html>

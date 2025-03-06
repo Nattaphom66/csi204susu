@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>To-Do List App</title>
+    <style>
+        /* CSS Styling */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        .container {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            width: 400px;
+        }
+
+        h1 {
+            text-align: center;
+            font-size: 24px;
+        }
+
+        input {
+            width: calc(100% - 90px);
+            padding: 10px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        button {
+            padding: 10px;
+            width: 70px;
+            border: none;
+            background-color: #4CAF50;
+            color: white;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
+
+        table {
+            width: 100%;
+            margin-top: 20px;
+            border-collapse: collapse;
+        }
+
+        th, td {
+            padding: 10px;
+            border: 1px solid #ddd;
+            text-align: left;
+        }
+
+        th {
+            background-color: #f2f2f2;
+        }
+
+        button.delete-btn {
+            background-color: #f44336;
+            border: none;
+            color: white;
+            cursor: pointer;
+        }
+
+        button.delete-btn:hover {
+            background-color: #e60000;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>To-Do List</h1>
+        <input type="text" id="taskInput" placeholder="เพิ่มรายการใหม่...">
+        <button onclick="addTask()">เพิ่ม</button>
+
+        <table id="taskTable">
+            <thead>
+                <tr>
+                    <th>รายการ</th>
+                    <th>จัดการ</th>
+                </tr>
+            </thead>
+            <tbody></tbody>
+        </table>
+    </div>
+
+    <script>
+        // JavaScript Code
+
+        // เรียกใช้ฟังก์ชันเพื่อแสดงรายการจาก LocalStorage
+        document.addEventListener("DOMContentLoaded", loadTasks);
+
+        function addTask() {
+            const taskInput = document.getElementById("taskInput");
+            const task = taskInput.value.trim();
+
+            if (task !== "") {
+                const tasks = getTasksFromLocalStorage();
+                tasks.push(task);
+                saveTasksToLocalStorage(tasks);
+                taskInput.value = ""; // ล้างช่องกรอก
+                loadTasks();
+            }
+        }
+
+        function loadTasks() {
+            const tasks = getTasksFromLocalStorage();
+            const taskTableBody = document.getElementById("taskTable").getElementsByTagName('tbody')[0];
+            taskTableBody.innerHTML = "";
+
+            tasks.forEach((task, index) => {
+                const row = taskTableBody.insertRow();
+                const cell1 = row.insertCell(0);
+                const cell2 = row.insertCell(1);
+
+                cell1.textContent = task;
+
+                const deleteButton = document.createElement("button");
+                deleteButton.textContent = "ลบ";
+                deleteButton.classList.add("delete-btn");
+                deleteButton.onclick = () => deleteTask(index);
+
+                cell2.appendChild(deleteButton);
+            });
+        }
+
+        function deleteTask(index) {
+            const tasks = getTasksFromLocalStorage();
+            tasks.splice(index, 1);
+            saveTasksToLocalStorage(tasks);
+            loadTasks();
+        }
+
+        function getTasksFromLocalStorage() {
+            const tasks = localStorage.getItem("tasks");
+            return tasks ? JSON.parse(tasks) : [];
+        }
+
+        function saveTasksToLocalStorage(tasks) {
+            localStorage.setItem("tasks", JSON.stringify(tasks));
+        }
+    </script>
+</body>
+</html>

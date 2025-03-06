@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bubble Sort Example</title>
+</head>
+<body>
+    <h1>Bubble Sort - การเรียงลำดับข้อมูล</h1>
+    
+    <button onclick="sortArray()">เรียงลำดับข้อมูล</button>
+    <p id="output"></p>
+
+    <script>
+        function generateRandomArray(size) {
+            let array = [];
+            for (let i = 0; i < size; i++) {
+                array.push(Math.floor(Math.random() * 100) + 1);  // ตัวเลขสุ่มระหว่าง 1 ถึง 100
+            }
+            return array;
+        }
+
+        function bubbleSort(arr) {
+            let n = arr.length;
+            for (let i = 0; i < n; i++) {
+                for (let j = 0; j < n - 1 - i; j++) {
+                    if (arr[j] > arr[j + 1]) {
+                        // Swap ค่า
+                        let temp = arr[j];
+                        arr[j] = arr[j + 1];
+                        arr[j + 1] = temp;
+                    }
+                }
+            }
+            return arr;
+        }
+
+        function sortArray() {
+            try {
+                // สร้าง Array ที่มี 100 ช่องที่มีตัวเลขสุ่ม
+                let randomArray = generateRandomArray(100);
+                console.log("Array ก่อนการเรียงลำดับ:", randomArray);
+                document.getElementById("output").innerHTML = "Array ก่อนการเรียงลำดับ: <br>" + randomArray.join(", ") + "<br><br>";
+
+                // ใช้ Bubble Sort เรียงลำดับ Array
+                let sortedArray = bubbleSort(randomArray);
+                console.log("Array หลังจากการเรียงลำดับ:", sortedArray);
+                document.getElementById("output").innerHTML += "Array หลังจากการเรียงลำดับ: <br>" + sortedArray.join(", ");
+            } catch (error) {
+                console.error("เกิดข้อผิดพลาด:", error);
+                document.getElementById("output").innerHTML = "เกิดข้อผิดพลาด: " + error.message;
+            }
+        }
+    </script>
+</body>
+</html>

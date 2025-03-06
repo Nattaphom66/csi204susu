@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>While Loop Example</title>
+</head>
+<body>
+    <h1>While Loop รับค่าจากผู้ใช้จนกว่าจะพิมพ์ "exit"</h1>
+
+    <input type="text" id="userInput" placeholder="พิมพ์คำที่นี่">
+    <button onclick="startWhileLoop()">ส่งค่า</button>
+    <p id="output"></p>
+
+    <script>
+        // ฟังก์ชันที่จะทำงานเมื่อกดปุ่ม "ส่งค่า"
+        function startWhileLoop() {
+            let output = document.getElementById("output");
+            let userInput = document.getElementById("userInput").value; // รับค่าจาก input
+            
+            // ตรวจสอบว่าผู้ใช้พิมพ์ "exit" หรือไม่
+            if (userInput !== "exit") {
+                output.innerHTML += "คุณพิมพ์: " + userInput + "<br>"; // แสดงค่าที่ผู้ใช้พิมพ์
+                document.getElementById("userInput").value = ""; // เคลียร์ input หลังจากส่ง
+            } else {
+                output.innerHTML += "โปรแกรมหยุดเมื่อพิมพ์ 'exit'<br>";
+                document.getElementById("userInput").disabled = true; // ปิดการพิมพ์เมื่อพิมพ์ 'exit'
+                document.querySelector("button").disabled = true; // ปิดปุ่มหลังจากหยุด
+            }
+        }
+    </script>
+</body>
+</html>
