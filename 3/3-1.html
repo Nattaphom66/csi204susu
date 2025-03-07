@@ -23,20 +23,34 @@
             background-color: #505050;
             color: white;
         }
+        #message {
+            margin-top: 20px;
+            font-size: 18px;
+            color: #333;
+        }
     </style>
 </head>
 <body>
     <h1>เปลี่ยนสีพื้นหลัง!!</h1>
     <button onclick="changeBackgroundColor()" onmouseover="changeButtonColor(this)">เปลี่ยนสี</button>
     <input type="text" placeholder="ลองพิมดูสิ!!" onkeyup="changeBackgroundColor()">
+    <div id="message"></div>
     
     <script>
+        document.addEventListener('DOMContentLoaded', (event) => {
+            const button = document.querySelector('button');
+            const messageDiv = document.getElementById('message');
+            button.addEventListener('click', () => {
+                messageDiv.textContent = 'ปุ่มถูกคลิกแล้ว!';
+            });
+        });
+    
         function changeBackgroundColor() {
             const colors = ["#FF5733", "#33FF57", "#3357FF", "#F4D03F", "#8E44AD"];
             const randomColor = colors[Math.floor(Math.random() * colors.length)];
             document.body.style.backgroundColor = randomColor;
         }
-
+    
         function changeButtonColor(button) {
             const colors = ["#FF5733", "#33FF57", "#3357FF", "#F4D03F", "#8E44AD"];
             const randomColor = colors[Math.floor(Math.random() * colors.length)];

@@ -1,54 +1,113 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="th">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Bubble Sort Example</title>
+    <title>ตัวอย่าง Recursive Algorithm</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin: 50px;
+            background-color: #f0f0f0;
+        }
+        button {
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+            border: none;
+            background-color: #ff00ff;
+            color: white;
+            border-radius: 5px;
+            transition: background-color 0.3s;
+        }
+        button:hover {
+            background-color: #550c68;
+        }
+        p {
+            background-color: #ffffff;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+    </style>
 </head>
 <body>
-    <h1>Bubble Sort - การเรียงลำดับข้อมูล</h1>
-    
-    <button onclick="sortArray()">เรียงลำดับข้อมูล</button>
-    <p id="output"></p>
+    <h1>การคำนวณด้วย Recursive Algorithm - Factorial และ Fibonacci Sequence</h1>
+
+    <h2>การคำนวณ Factorial</h2>
+    <input type="number" id="factorialInput" placeholder="กรอกตัวเลขสำหรับคำนวณ Factorial">
+    <button onclick="calculateFactorial()">คำนวณ Factorial</button>
+    <p id="factorialResult"></p>
+
+    <h2>การคำนวณ Fibonacci Sequence</h2>
+    <input type="number" id="fibonacciInput" placeholder="กรอกตัวเลขสำหรับคำนวณ Fibonacci">
+    <button onclick="calculateFibonacci()">คำนวณ Fibonacci</button>
+    <p id="fibonacciResult"></p>
 
     <script>
-        function generateRandomArray(size) {
-            let array = [];
-            for (let i = 0; i < size; i++) {
-                array.push(Math.floor(Math.random() * 100) + 1);  // ตัวเลขสุ่มระหว่าง 1 ถึง 100
-            }
-            return array;
-        }
-
-        function bubbleSort(arr) {
-            let n = arr.length;
-            for (let i = 0; i < n; i++) {
-                for (let j = 0; j < n - 1 - i; j++) {
-                    if (arr[j] > arr[j + 1]) {
-                        // Swap ค่า
-                        let temp = arr[j];
-                        arr[j] = arr[j + 1];
-                        arr[j + 1] = temp;
-                    }
-                }
-            }
-            return arr;
-        }
-
-        function sortArray() {
+        function factorial(n) {
             try {
-                // สร้าง Array ที่มี 100 ช่องที่มีตัวเลขสุ่ม
-                let randomArray = generateRandomArray(100);
-                console.log("Array ก่อนการเรียงลำดับ:", randomArray);
-                document.getElementById("output").innerHTML = "Array ก่อนการเรียงลำดับ: <br>" + randomArray.join(", ") + "<br><br>";
-
-                // ใช้ Bubble Sort เรียงลำดับ Array
-                let sortedArray = bubbleSort(randomArray);
-                console.log("Array หลังจากการเรียงลำดับ:", sortedArray);
-                document.getElementById("output").innerHTML += "Array หลังจากการเรียงลำดับ: <br>" + sortedArray.join(", ");
+                console.log("กำลังคำนวณ Factorial ของ", n);
+                if (n === 0 || n === 1) {
+                    return 1;
+                } else {
+                    return n * factorial(n - 1);
+                }
             } catch (error) {
-                console.error("เกิดข้อผิดพลาด:", error);
-                document.getElementById("output").innerHTML = "เกิดข้อผิดพลาด: " + error.message;
+                console.error("เกิดข้อผิดพลาดในการคำนวณ Factorial:", error.message);
+                return "เกิดข้อผิดพลาด";
+            }
+        }
+
+        function fibonacci(n) {
+            try {
+                console.log("กำลังคำนวณ Fibonacci ของ", n);
+                if (n === 0) {
+                    return 0;
+                } else if (n === 1) {
+                    return 1;
+                } else {
+                    return fibonacci(n - 1) + fibonacci(n - 2);
+                }
+            } catch (error) {
+                console.error("เกิดข้อผิดพลาดในการคำนวณ Fibonacci:", error.message);
+                return "เกิดข้อผิดพลาด";
+            }
+        }
+
+        function calculateFactorial() {
+            try {
+                const num = parseInt(document.getElementById("factorialInput").value);
+                if (!isNaN(num) && num >= 0) {
+                    console.log("กำลังคำนวณ Factorial สำหรับตัวเลข", num);
+                    debugger;
+                    const result = factorial(num);
+                    document.getElementById("factorialResult").innerHTML = `ค่า Factorial ของ ${num} คือ ${result}`;
+                } else {
+                    document.getElementById("factorialResult").innerHTML = "กรุณากรอกตัวเลขที่เป็นจำนวนเต็มไม่ติดลบ";
+                }
+            } catch (error) {
+                console.error("เกิดข้อผิดพลาดในการคำนวณ Factorial:", error.message);
+                document.getElementById("factorialResult").innerHTML = "เกิดข้อผิดพลาดในการคำนวณ Factorial";
+            }
+        }
+
+        function calculateFibonacci() {
+            try {
+                const num = parseInt(document.getElementById("fibonacciInput").value);
+                if (!isNaN(num) && num >= 0) {
+                    console.log("กำลังคำนวณ Fibonacci สำหรับตัวเลข", num);
+                    debugger;
+                    const result = fibonacci(num);
+                    document.getElementById("fibonacciResult").innerHTML = `ค่า Fibonacci ของ ${num} คือ ${result}`;
+                } else {
+                    document.getElementById("fibonacciResult").innerHTML = "กรุณากรอกตัวเลขที่เป็นจำนวนเต็มไม่ติดลบ";
+                }
+            } catch (error) {
+                console.error("เกิดข้อผิดพลาดในการคำนวณ Fibonacci:", error.message);
+                document.getElementById("fibonacciResult").innerHTML = "เกิดข้อผิดพลาดในการคำนวณ Fibonacci";
             }
         }
     </script>

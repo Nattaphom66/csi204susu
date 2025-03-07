@@ -13,19 +13,24 @@
     <p id="output"></p>
 
     <script>
-        // ฟังก์ชันที่จะทำงานเมื่อกดปุ่ม "ส่งค่า"
+        for (let i = 1; i <= 10; i++) {
+    console.log(i);
+}
+
+
         function startWhileLoop() {
             let output = document.getElementById("output");
-            let userInput = document.getElementById("userInput").value; // รับค่าจาก input
+            let userInput = document.getElementById("userInput").value;
             
-            // ตรวจสอบว่าผู้ใช้พิมพ์ "exit" หรือไม่
+
             if (userInput !== "exit") {
-                output.innerHTML += "คุณพิมพ์: " + userInput + "<br>"; // แสดงค่าที่ผู้ใช้พิมพ์
-                document.getElementById("userInput").value = ""; // เคลียร์ input หลังจากส่ง
+                output.innerHTML += "คุณพิมพ์: " + userInput + "<br>";
+                document.getElementById("userInput").value = "";
+                console.log("คุณพิมพ์:", userInput);
             } else {
                 output.innerHTML += "โปรแกรมหยุดเมื่อพิมพ์ 'exit'<br>";
-                document.getElementById("userInput").disabled = true; // ปิดการพิมพ์เมื่อพิมพ์ 'exit'
-                document.querySelector("button").disabled = true; // ปิดปุ่มหลังจากหยุด
+                document.getElementById("userInput").disabled = true;
+                document.querySelector("button").disabled = true;
             }
         }
     </script>

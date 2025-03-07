@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bubble Sort Example</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin: 50px;
+            background-color: #f0f0f0;
+        }
+        button {
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+            border: none;
+            background-color: #007BFF;
+            color: white;
+            border-radius: 5px;
+            transition: background-color 0.3s;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        #output {
+            margin-top: 20px;
+            padding: 20px;
+            background-color: #ffffff;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            text-align: left;
+            white-space: pre-wrap;
+        }
+    </style>
+</head>
+<body>
+    <h1>Bubble Sort - การเรียงลำดับข้อมูล</h1>
+    
+    <button onclick="sortArray()">เรียงลำดับข้อมูล</button>
+    <p id="output"></p>
+
+    <script>
+        function generateRandomArray(size) {
+            let array = [];
+            for (let i = 0; i < size; i++) {
+                array.push(Math.floor(Math.random() * 100) + 1);  // ตัวเลขสุ่มระหว่าง 1 ถึง 100
+            }
+            return array;
+        }
+
+        function bubbleSort(arr) {
+            let n = arr.length;
+            for (let i = 0; i < n; i++) {
+                for (let j = 0; j < n - 1 - i; j++) {
+                    if (arr[j] > arr[j + 1]) {
+                        // Swap ค่า
+                        let temp = arr[j];
+                        arr[j] = arr[j + 1];
+                        arr[j + 1] = temp;
+                    }
+                }
+            }
+            return arr;
+        }
+
+        function sortArray() {
+            try {
+
+                let randomArray = generateRandomArray(100);
+                console.log("Array ก่อนการเรียงลำดับ:", randomArray);
+                document.getElementById("output").innerHTML = "Array ก่อนการเรียงลำดับ: <br>" + randomArray.join(", ") + "<br><br>";
+
+
+                let sortedArray = bubbleSort(randomArray);
+                console.log("Array หลังจากการเรียงลำดับ:", sortedArray);
+                document.getElementById("output").innerHTML += "Array หลังจากการเรียงลำดับ: <br>" + sortedArray.join(", ");
+            } catch (error) {
+                console.error("เกิดข้อผิดพลาด:", error);
+                document.getElementById("output").innerHTML = "เกิดข้อผิดพลาด: " + error.message;
+            }
+        }
+    </script>
+</body>
+</html>
